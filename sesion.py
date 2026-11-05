@@ -7,6 +7,7 @@
 import tkinter
 import re
 from jugadores import *
+from ventanaPrincipal import *
 #Funciones
 def iniciarSesion():
     """
@@ -31,6 +32,7 @@ def iniciarSesion():
         Salida:
         - Ninguna:No retorna ningún valor.
         """
+        
         #Ventana de registro
         ventanaRegistro = tkinter.Toplevel(ventanaSesion)# Crea otra ventana
         ventanaRegistro.title("Registro")# Título de la ventana
@@ -105,6 +107,7 @@ def iniciarSesion():
         Salida:
         - Ninguna:No retorna ningún valor.
         """
+        
         # Ventana de inicio de sesión
         ventanaInicio = tkinter.Toplevel(ventanaSesion) #Crea ventana secundaria
         ventanaInicio.title("Iniciar sesión")
@@ -140,6 +143,7 @@ def iniciarSesion():
                         break
                 if existe:
                     etiquetaMensaje.config(text="Inicio de sesión correcto", fg="green")
+                    ventanaInicio.destroy(),ventanaPrincipal(username)
                 else:
                     etiquetaMensaje.config(text="El jugador no existe", fg="red")
         # Botón para ingresar
@@ -155,4 +159,3 @@ def iniciarSesion():
     botonInicioSesion = tkinter.Button(ventanaSesion,text="Iniciar sesión",font=("Arial",12),command=abrirInicioSesion)
     botonInicioSesion.pack(pady=10)# Coloca el botón
     ventanaSesion.mainloop()
-    
