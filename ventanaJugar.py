@@ -8,6 +8,18 @@ from jugadores import *
 
 #Definicion de funciones
 def ventanaJugar(ventanaAnterior, username):
+    '''
+    Funcionalidad:
+    Crear y mostrar la ventana de juegos del casino.
+    Presenta los botones correspondientes a los juegos disponibles
+    y permite regresar al menú principal.
+    Entradas:
+    ventanaAnterior: Ventana principal desde la cual se abre la ventana de juegos.
+    username (str): Nombre del jugador que inició sesión.
+    Salidas:
+    No retorna ningún valor.
+    Muestra una ventana gráfica con las opciones de juegos disponibles.
+    '''
     #titulo
     ventanaJugar = tkinter.Toplevel(ventanaAnterior)
     ventanaJugar.configure(bg="lightblue")
