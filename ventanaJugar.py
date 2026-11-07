@@ -43,6 +43,4 @@ def ventanaJugar(ventanaAnterior, username):
     #Volver a menú principal
     botonVolver = tkinter.Button(ventanaJugar,text="Volver",font=("Times New Roman", 16), command=lambda: [ventanaJugar.destroy(), ventanaAnterior.deiconify()])
     botonVolver.pack(pady=5)
-    #mantener abierta la ventana
-    ventanaPrincipal.mainloop()
     
