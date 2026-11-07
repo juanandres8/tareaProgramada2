@@ -5,7 +5,7 @@
 #Importaciones
 import tkinter
 from jugadores import *
-
+from ruleta import ventanaRuleta
 #Definicion de funciones
 def ventanaJugar(ventanaAnterior, username):
     '''
@@ -29,7 +29,7 @@ def ventanaJugar(ventanaAnterior, username):
     ventanaJugar.geometry("800x500")# Tamaño de la ventana
     #Botones
     #Ruleta
-    botonRuleta = tkinter.Button(ventanaJugar,text="Ruleta",font=("Times New Roman", 16))
+    botonRuleta=tkinter.Button(ventanaJugar,text="Ruleta",font=("Times New Roman", 16),command=lambda: ventanaRuleta(ventanaJugar, username))
     botonRuleta.pack(pady=5)
     #Tragamonedas
     botonTragamonedas = tkinter.Button(ventanaJugar,text="Tragamonedas",font=("Times New Roman", 16))
