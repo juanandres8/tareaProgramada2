@@ -7,7 +7,7 @@
 import tkinter
 from jugadores import *
 from ventanaJugar import *
-
+from fichas import ventanaFichas
 #Definicion de funciones
 def ventanaPrincipal(username):
     '''  
@@ -31,7 +31,10 @@ def ventanaPrincipal(username):
     botonJugar = tkinter.Button(ventanaPrincipal,text="Jugar",font=("Times New Roman", 16),command=lambda: [ventanaPrincipal.withdraw(), ventanaJugar(ventanaPrincipal, username)])
     botonJugar.pack(pady=5)
     #Fichas
-    botonFichas = tkinter.Button(ventanaPrincipal,text="Fichas",font=("Times New Roman", 16))
+    botonFichas = tkinter.Button(
+    ventanaPrincipal,
+    text="Fichas",
+    font=("Times New Roman", 16),command=lambda: [ventanaPrincipal.withdraw(),ventanaFichas(ventanaPrincipal, username)])
     botonFichas.pack(pady=5)
     #Ranking
     botonRanking = tkinter.Button(ventanaPrincipal,text="Ranking",font=("Times New Roman", 16))
