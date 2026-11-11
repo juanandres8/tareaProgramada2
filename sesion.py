@@ -8,6 +8,7 @@ import tkinter
 import re
 from jugadores import *
 from ventanaPrincipal import *
+from tkinter import simpledialog, messagebox
 #Funciones
 def iniciarSesion():
     """
@@ -142,13 +143,38 @@ def iniciarSesion():
                         existe=True
                         break
                 if existe:
-                    etiquetaMensaje.config(text="Inicio de sesión correcto", fg="green")
-                    ventanaInicio.destroy(),ventanaPrincipal(username)
+                    #Buscar jugador
+                    jugadorActual = None
+                    for jugador in jugadores:
+                        if jugador[0][0] == username:
+                            jugadorActual = jugador
+                            break
+                    #Consultar dinero solamente si no ha sido registrado
+                    if jugadorActual[1][0] == 0.0:
+                        dinero = simpledialog.askfloat( "Dinero inicial","¿Cuánto dinero tiene disponible?",parent=ventanaInicio,minvalue=0)
+                        #Comprobar si canceló
+                        if dinero is None:
+                            return
+                        #Validar que sea mayor a $5
+                        if dinero <= 5:
+                            messagebox.showerror("Dinero insuficiente", "Debe ingresar un monto mayor a $5", parent=ventanaInicio)
+                            #Regresar a la primera ventana
+                            ventanaInicio.destroy()
+                            ventanaSesion.deiconify()
+                            return
+                        #Guardar dinero
+                        jugadorActual[1][0] = dinero
+                        guardarJugadores(jugadores)
+                    #Ingresar al casino
+                    etiquetaMensaje.config( text="Inicio de sesión correcto", fg="green")
+                    ventanaInicio.destroy()
+                    ventanaPrincipal(username)
                 else:
                     etiquetaMensaje.config(text="El jugador no existe", fg="red")
         # Botón para ingresar
         botonIngresar = tkinter.Button(ventanaInicio, text="Ingresar", font=("Arial", 12),command=comprobarInicioSesion)
-        botonIngresar.pack(pady=10)
+        botonIngresar.pack(pady=5)
+        
     #Título
     titulo=tkinter.Label(ventanaSesion,text="Bienvenido al Casino",font=("Arial",28))
     titulo.pack(pady=20)
