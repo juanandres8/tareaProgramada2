@@ -6,6 +6,7 @@
 import tkinter
 from jugadores import *
 from ruleta import ventanaRuleta
+from tragamonedas import ventanaTragamonedas
 #Definicion de funciones
 def ventanaJugar(ventanaAnterior, username):
     '''
@@ -32,7 +33,7 @@ def ventanaJugar(ventanaAnterior, username):
     botonRuleta=tkinter.Button(ventanaJugar,text="Ruleta",font=("Times New Roman", 16),command=lambda: ventanaRuleta(ventanaJugar, username))
     botonRuleta.pack(pady=5)
     #Tragamonedas
-    botonTragamonedas = tkinter.Button(ventanaJugar,text="Tragamonedas",font=("Times New Roman", 16))
+    botonTragamonedas = tkinter.Button(ventanaJugar,text="Tragamonedas",font=("Times New Roman", 16),command=lambda: ventanaTragamonedas(ventanaJugar,username))
     botonTragamonedas.pack(pady=5)
     #Blackjack
     botonBlackjack = tkinter.Button(ventanaJugar,text="Blackjack",font=("Times New Roman", 16))
