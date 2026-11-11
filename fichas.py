@@ -5,23 +5,27 @@
 
 #Importaciones
 import tkinter
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 from jugadores import cargarJugadores, guardarJugadores
 
 #Diccionario con el valor de cada ficha
-valoresFichas = {"rojas": 10,"azules": 50,"verdes": 20,"blancas": 5}
-
+valoresFichas = {
+    "rojas": 10,
+    "azules": 50,
+    "verdes": 20,
+    "blancas": 5}
 #Definicion de funciones
 def ventanaFichas(ventanaAnterior, username):
     """
     Funcionalidad:
     Crea y muestra la ventana para comprar y canjear fichas.
     Entradas:
-    - ventanaAnterior: Ventana desde la cual se abre.
+    - ventanaAnterior: Ventana principal desde donde se abre.
     - username: Nombre del jugador.
     Salidas:
     - Ninguna.
     """
+
     #Crear ventana
     ventana = tkinter.Toplevel(ventanaAnterior)
     ventana.configure(bg="lightblue")
@@ -37,55 +41,76 @@ def ventanaFichas(ventanaAnterior, username):
     if jugadorActual is None:
         messagebox.showerror("Error", "Jugador no encontrado")
         ventana.destroy()
+        ventanaAnterior.deiconify()
         return
     #Titulo
     titulo = tkinter.Label(ventana,
         text="Administración de fichas",
         font=("Georgia", 24),
-        bg="lightblue")
-    titulo.pack(pady=15)
-    #Informacion del jugador
+        bg="lightblue" )
+    titulo.pack(pady=5)
+    #Username
     etiquetaJugador = tkinter.Label(ventana,
         text="Jugador: " + username,
         font=("Arial", 12),
         bg="lightblue")
     etiquetaJugador.pack(pady=5)
-    #Mostrar dinero disponible
+    #Dinero disponible
     etiquetaDinero = tkinter.Label(ventana,
-        text="Dinero disponible: $" + str(jugadorActual[1][0]),
+        text="",
         font=("Arial", 14),
         bg="lightblue")
-    etiquetaDinero.pack(pady=10)
-    #Mostrar fichas disponibles
+    etiquetaDinero.pack(pady=5)
+    #Fichas disponibles
     etiquetaFichas = tkinter.Label(ventana,
         text="",
         font=("Arial", 12),
         bg="lightblue")
     etiquetaFichas.pack(pady=10)
-    #Mostrar valores de las fichas
+    #Valores de las fichas
     etiquetaValores = tkinter.Label(ventana,
         text="Valor de las fichas:\n"
         "Rojas: $10 | Azules: $50\n"
         "Verdes: $20 | Blancas: $5",
         font=("Arial", 12),
         bg="lightblue")
-    etiquetaValores.pack(pady=10)
+    etiquetaValores.pack(pady=5)
     #Actualizar informacion
     def actualizarInformacion():
-        etiquetaDinero.config( text=f"Dinero disponible: ${jugadorActual[1][0]}")
-        etiquetaFichas.config(
-            text=f"Fichas disponibles:\n"
+        etiquetaDinero.config(text=f"Dinero disponible: ${jugadorActual[1][0]:.2f}")
+        etiquetaFichas.config(text=f"Fichas disponibles:\n"
             f"Rojas: {jugadorActual[1][1]} | "
             f"Azules: {jugadorActual[1][2]}\n"
             f"Verdes: {jugadorActual[1][3]} | "
             f"Blancas: {jugadorActual[1][4]}")
     actualizarInformacion()
+    #Agregar dinero
+    def agregarDinero():
+        #Solicitar cantidad de dinero
+        dinero = simpledialog.askfloat( "Agregar dinero","¿Cuánto dinero desea agregar?", parent=ventana)
+        #Comprobar si cancelo
+        if dinero is None:
+            return
+        #Validar cantidad
+        if dinero <= 0:
+            messagebox.showerror( "Error","Debe ingresar una cantidad mayor a cero",parent=ventana)
+            return
+        #Confirmar operacion
+        confirmar = messagebox.askyesno( "Confirmar",f"¿Desea agregar ${dinero:.2f} a su cuenta?",parent=ventana)
+        if confirmar:
+            #Sumar dinero al saldo actual
+            jugadorActual[1][0] += dinero
+            #Guardar cambios
+            guardarJugadores(jugadores)
+            #Actualizar informacion
+            actualizarInformacion()
+            messagebox.showinfo("Dinero", "Dinero agregado correctamente", parent=ventana)
     #Campos para ingresar cantidades
-    tituloCantidad = tkinter.Label( ventana,
+    tituloCantidad = tkinter.Label(ventana,
         text="Ingrese la cantidad de fichas:",
         font=("Arial", 13),
         bg="lightblue")
-    tituloCantidad.pack(pady=10)
+    tituloCantidad.pack(pady=5)
     colores = ["rojas", "azules", "verdes", "blancas"]
     entradas = []
     for color in colores:
@@ -105,74 +130,102 @@ def ventanaFichas(ventanaAnterior, username):
             try:
                 cantidad = int(entrada.get())
                 if cantidad < 0:
-                    messagebox.showerror("Error","No puede ingresar cantidades negativas")
+                    messagebox.showerror("Error","No puede ingresar cantidades negativas", parent=ventana)
                     return None
                 cantidades.append(cantidad)
             except ValueError:
-                messagebox.showerror("Error","Debe ingresar cantidades enteras")
+                messagebox.showerror("Error", "Debe ingresar cantidades enteras",parent=ventana)
                 return None
         if sum(cantidades) == 0:
-            messagebox.showerror("Error","Debe ingresar al menos una ficha")
+            messagebox.showerror("Error", "Debe ingresar al menos una ficha", parent=ventana)
             return None
         return cantidades
+    #Limpiar entradas
+    def limpiarEntradas():
+        for entrada in entradas:
+            entrada.delete(0, tkinter.END)
+            entrada.insert(0, "0")
     #Comprar fichas
     def comprarFichas():
         cantidades = obtenerCantidades()
         if cantidades is None:
             return
+        #Calcular costo de las fichas
         total = 0
         for posicion in range(4):
-            total += cantidades[posicion] * valoresFichas[colores[posicion]]
+            total += ( cantidades[posicion] *valoresFichas[colores[posicion]])
+        #Comprobar dinero disponible
         if total > jugadorActual[1][0]:
-            messagebox.showerror("Compra","No tiene suficiente dinero")
+            messagebox.showerror( "Compra","No tiene suficiente dinero", parent=ventana)
             return
-        confirmar = messagebox.askyesno(
-            "Confirmar compra",
-            f"Total de la compra: ${total}\n"
-            "¿Desea realizar la compra?" )
+        #Confirmar compra
+        confirmar = messagebox.askyesno("Confirmar compra", f"Total de la compra: ${total}\n" "¿Desea realizar la compra?",parent=ventana)
         if confirmar:
+            #Descontar dinero
             jugadorActual[1][0] -= total
+            #Agregar fichas
             for posicion in range(4):
                 jugadorActual[1][posicion + 1] += cantidades[posicion]
+            #Guardar cambios
             guardarJugadores(jugadores)
+            #Actualizar informacion
             actualizarInformacion()
-            messagebox.showinfo("Compra","Compra realizada correctamente")
+            limpiarEntradas()
+            messagebox.showinfo("Compra","Compra realizada correctamente", parent=ventana )
     #Canjear fichas
     def canjearFichas():
         cantidades = obtenerCantidades()
         if cantidades is None:
             return
-        #Comprobar que tenga suficientes fichas
+        #Comprobar fichas disponibles
         for posicion in range(4):
             if cantidades[posicion] > jugadorActual[1][posicion + 1]:
-                messagebox.showerror( "Canje",f"No tiene suficientes fichas {colores[posicion]}")
+                messagebox.showerror("Canje", f"No tiene suficientes fichas {colores[posicion]}",parent=ventana )
                 return
-        #Calcular dinero que recibirá
+        #Calcular dinero que recibira
         total = 0
         for posicion in range(4):
-            total += cantidades[posicion] * valoresFichas[colores[posicion]]
-        confirmar = messagebox.askyesno("Confirmar canje",f"Dinero que recibirá: ${total}\n""¿Desea realizar el canje?" )
+            total += (cantidades[posicion] *valoresFichas[colores[posicion]] )
+        #Confirmar canje
+        confirmar = messagebox.askyesno("Confirmar canje", f"Dinero que recibirá: ${total}\n""¿Desea realizar el canje?", parent=ventana )
         if confirmar:
+            #Sumar dinero
             jugadorActual[1][0] += total
+            #Descontar fichas
             for posicion in range(4):
                 jugadorActual[1][posicion + 1] -= cantidades[posicion]
+            #Guardar cambios
             guardarJugadores(jugadores)
+            #Actualizar informacion
             actualizarInformacion()
-            messagebox.showinfo( "Canje","Canje realizado correctamente")
-    #Botones
+            limpiarEntradas()
+            messagebox.showinfo("Canje","Canje realizado correctamente",parent=ventana)
+    #Boton comprar
     botonComprar = tkinter.Button(ventana,
         text="Comprar fichas",
         font=("Times New Roman", 14),
-        command=comprarFichas)
-    botonComprar.pack(pady=10)
+        command=comprarFichas )
+    botonComprar.pack(pady=5)
+    #Boton canjear
     botonCanjear = tkinter.Button(ventana,
         text="Canjear fichas",
         font=("Times New Roman", 14),
         command=canjearFichas)
-    botonCanjear.pack(pady=10)
-    #Boton volver
-    botonVolver = tkinter.Button( ventana,
-        text="Volver",
+    botonCanjear.pack(pady=5)
+    #Boton agregar dinero
+    botonAgregarDinero = tkinter.Button(ventana,
+        text="Agregar dinero",
         font=("Times New Roman", 14),
-        command=ventana.destroy)
-    botonVolver.pack(pady=10)
+        command=agregarDinero)
+    botonAgregarDinero.pack(pady=5)
+    #Boton volver
+    def volverPrincipal():
+        ventana.destroy()
+        ventanaAnterior.deiconify()
+    botonVolver = tkinter.Button(ventana,
+        text="Volver al menu principal",
+        font=("Times New Roman", 14),
+        command=volverPrincipal)
+    botonVolver.pack(pady=5)
+    #Regresar al menu al cerrar la ventana
+    ventana.protocol( "WM_DELETE_WINDOW",volverPrincipal)
