@@ -197,7 +197,10 @@ def ventanaBlackjack(ventanaL, username):
     jugadores=cargarJugadores()
     for jugador in jugadores:
         if jugador[0][0]==username:
-            textoFichasDisponibles = Label(ventana,text=f"Rojas: {jugador[1][1]} | "
+            # Mostrar el puntaje del jugador
+            textoPuntaje=Label(ventana,text=f"Puntaje: {jugador[2]}")
+            textoPuntaje.pack(pady=2)
+            textoFichasDisponibles=Label(ventana,text=f"Rojas: {jugador[1][1]} | "
                      f"Azules: {jugador[1][2]} | "
                      f"Verdes: {jugador[1][3]} | "
                      f"Blancas: {jugador[1][4]}")
@@ -312,6 +315,7 @@ def ventanaBlackjack(ventanaL, username):
             #Mostrar solo una carta del crupier
             cartasCrupier.config(text=f"{partida['manoCrupier'][0]}\n""Carta oculta")
             botonIniciar.config(state="disabled")
+            botonVolver.config(state="disabled")
             botonPlantarse.config(state="normal")
             if calcularMano(partida["manoJugador"])<21:
                 botonPedir.config(state="normal")
@@ -360,7 +364,7 @@ def ventanaBlackjack(ventanaL, username):
             mensaje.config(text="Puedes pedir otra carta o plantarte.")
     #Botón para pedir otra carta
     frameBotones=Frame(ventana)
-    frameBotones.pack(pady=5)
+    frameBotones.pack(pady=5, before=textoCrupier)
     botonPedir=Button(frameBotones,text="Pedir carta",command=pedirCartaJugador,state="disabled")
     botonPedir.pack(side="left",padx=10)
     def plantarse():
@@ -410,8 +414,14 @@ def ventanaBlackjack(ventanaL, username):
             if jugador[0][0]==username:
                 #Actualizar las fichas
                 actualizarFichasBlackjack(jugador,partida["fichasApostadas"],ganador)
+                if ganador=="jugador":
+                    jugador[2]+= 1
+                elif ganador=="crupier":
+                    jugador[2]-=1
                 #Guardar los cambios
                 guardarJugadores(jugadores)
+                # Actualizar el puntaje en pantalla
+                textoPuntaje.config(text=f"Puntaje: {jugador[2]}")
                 #Actualizar las fichas en pantalla
                 textoFichasDisponibles.config(text=f"Rojas: {jugador[1][1]} | "
                          f"Azules: {jugador[1][2]} | "
@@ -420,7 +430,30 @@ def ventanaBlackjack(ventanaL, username):
                 partida["finalizada"] = True
                 botonPedir.config(state="disabled")
                 botonPlantarse.config(state="disabled")
+                botonOtraVez.config(state="normal")
+                botonVolver.config(state="normal")
                 return
         mensaje.config(text="Jugador no encontrado")
-    
+    def jugarOtraVez():
+        """
+        Funcionalidad:
+        Limpia las cartas y permite iniciar
+        una nueva partida de Blackjack.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna.
+        """
+        cartasJugador.config(text="Sin cartas")
+        cartasCrupier.config(text="Sin cartas")
+        mensaje.config(text="Puede iniciar otra partida")
+        botonIniciar.config(state="normal")
+        #Deshabilitar los otros botones
+        botonPedir.config(state="disabled")
+        botonPlantarse.config(state="disabled")
+        botonOtraVez.config(state="disabled")
+    botonOtraVez=Button(frameBotones,text="Jugar otra vez",command=jugarOtraVez,state="disabled")
+    botonOtraVez.pack(side="left", padx=10)
+    botonVolver = Button(frameBotones,text="Volver",command=ventana.destroy)
+    botonVolver.pack(side="left", padx=5)
     

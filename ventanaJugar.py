@@ -7,6 +7,7 @@ import tkinter
 from jugadores import *
 from ruleta import ventanaRuleta
 from tragamonedas import ventanaTragamonedas
+from blackJack import ventanaBlackjack
 #Definicion de funciones
 def ventanaJugar(ventanaAnterior, username):
     '''
@@ -25,7 +26,7 @@ def ventanaJugar(ventanaAnterior, username):
     ventanaJugar = tkinter.Toplevel(ventanaAnterior)
     ventanaJugar.configure(bg="lightblue")
     ventanaJugar.title("Menú Juegos")# Título de la ventana
-    titulo = tkinter.Label(ventanaJugar,text="Juegos disponibles",font=("Georgia", 28),bg="lightblue")
+    titulo=tkinter.Label(ventanaJugar,text="Juegos disponibles",font=("Georgia", 28),bg="lightblue")
     titulo.pack(pady=20)
     ventanaJugar.geometry("800x500")# Tamaño de la ventana
     #Botones
@@ -36,7 +37,7 @@ def ventanaJugar(ventanaAnterior, username):
     botonTragamonedas = tkinter.Button(ventanaJugar,text="Tragamonedas",font=("Times New Roman", 16),command=lambda: ventanaTragamonedas(ventanaJugar,username))
     botonTragamonedas.pack(pady=5)
     #Blackjack
-    botonBlackjack = tkinter.Button(ventanaJugar,text="Blackjack",font=("Times New Roman", 16))
+    botonBlackjack=tkinter.Button(ventanaJugar,text="Blackjack",font=("Times New Roman", 16),command=lambda:ventanaBlackjack(ventanaJugar,username))
     botonBlackjack.pack(pady=5)
     #Dados
     botonDados = tkinter.Button(ventanaJugar,text="Dados",font=("Times New Roman", 16))
