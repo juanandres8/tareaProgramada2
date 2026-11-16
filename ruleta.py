@@ -6,7 +6,7 @@
 #Importaciones
 import random
 import re
-from tkinter import Toplevel,Label,Entry,Button
+from tkinter import Toplevel,Label,Entry,Button,Frame
 from jugadores import cargarJugadores, guardarJugadores
 #Funciones
 def crearCasillas():
@@ -147,7 +147,7 @@ def ventanaRuleta(ventanaL,username):
     """
     ventana=Toplevel(ventanaL)
     ventana.title("Ruleta")
-    ventana.geometry("500x400")
+    ventana.geometry("600x600")
     titulo=Label(ventana,text="Juego de Ruleta",font=("Arial",16))
     titulo.pack(pady=20)
     # Cargar los jugadores
@@ -172,12 +172,16 @@ def ventanaRuleta(ventanaL,username):
     textoFichas.pack(pady=10)
     coloresFichas=["Rojas", "Azules", "Verdes", "Blancas"]
     entradasFichas=[]
+    frameFichas=Frame(ventana)
+    frameFichas.pack(pady=5)
     for color in coloresFichas:
-        textoColor=Label(ventana, text=color)
+        columna=Frame(frameFichas)
+        columna.pack(side="left", padx=8)
+        textoColor=Label(columna, text=color)
         textoColor.pack()
-        entrada=Entry(ventana)
+        entrada=Entry(columna,width=8)
         entrada.insert(0, "0")
-        entrada.pack(pady=3)
+        entrada.pack(pady=4)
         entradasFichas.append(entrada)
     mensaje=Label(ventana, text="")
     mensaje.pack(pady=8)

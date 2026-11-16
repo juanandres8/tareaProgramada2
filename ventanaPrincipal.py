@@ -45,7 +45,40 @@ def ventanaPrincipal(username):
     botonAnalisis = tkinter.Button(ventanaPrincipal,text="Análisis",font=("Times New Roman", 16),command=lambda: ventanaAnalisis(ventanaPrincipal))
     botonAnalisis.pack(pady=5)
     #Cerrar sesión
-    botonCerrar = tkinter.Button(ventanaPrincipal,text="Cerrar sesión",font=("Times New Roman", 16))
+    def confirmarCerrarSesion():
+        """
+        Funcionalidad:
+        Muestra una ventana para confirmar
+        si el jugador desea cerrar sesión.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna.
+        """
+        ventanaConfirmacion=tkinter.Toplevel(ventanaPrincipal)
+        ventanaConfirmacion.title("Cerrar sesión")
+        ventanaConfirmacion.geometry("350x200")
+        texto = tkinter.Label(ventanaConfirmacion,text="¿Desea cerrar sesión?")
+        texto.pack(pady=20)
+        def cerrarSesion():
+            """
+            Funcionalidad:
+            Cierra el menú principal del casino
+            después de confirmar la salida.
+            Entrada:
+            - Ninguna.
+            Salida:
+            - Ninguna.
+            """
+            ventanaConfirmacion.destroy()
+            ventanaPrincipal.destroy()
+        botonConfirmar=tkinter.Button(ventanaConfirmacion,text="Confirmar",command=cerrarSesion)
+        botonConfirmar.pack(pady=5)
+        botonCancelar=tkinter.Button(ventanaConfirmacion,text="Cancelar",command=ventanaConfirmacion.destroy)
+        botonCancelar.pack(pady=5)
+        ventanaConfirmacion.grab_set()
+    # Cerrar sesión
+    botonCerrar=tkinter.Button(ventanaPrincipal,text="Cerrar sesión",font=("Times New Roman", 16),command=confirmarCerrarSesion)
     botonCerrar.pack(pady=5)
     #mantener abierta la ventana
     ventanaPrincipal.mainloop()
