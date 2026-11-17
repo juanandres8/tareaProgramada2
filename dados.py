@@ -114,7 +114,7 @@ def ventanaDados(ventanaAnterior, username):
     # Mostrar informacion del jugador
     textoPuntaje = Label(ventana,
         text=f"Jugador: {username} | Puntaje: {jugadorActual[2]}",
-        font=("Times New Roman", 14),
+        font=("Times New Roman", 12),
         bg=colorFondo,
         fg=colorTexto)
     textoPuntaje.pack(pady=10)
@@ -122,14 +122,14 @@ def ventanaDados(ventanaAnterior, username):
         text=f"Rojas: {jugadorActual[1][1]} | "
              f"Azules: {jugadorActual[1][2]} | "
              f"Verdes: {jugadorActual[1][3]} | "
-             f"Blancas: {jugadorActual[1][4]}",font=("Times New Roman", 12),bg=colorFondo,fg=colorTexto)
+             f"Blancas: {jugadorActual[1][4]}",font=("Times New Roman", 10),bg=colorFondo,fg=colorTexto)
     textoFichasDisponibles.pack(pady=5)
     Label(ventana,text="Seleccione el tipo de apuesta:",font=("Times New Roman", 13),bg=colorFondo,fg=colorTexto).pack(pady=5)
     # Variable que almacena el tipo de apuesta seleccionado
     tipoApuesta = StringVar(ventana)
     tipoApuesta.set("Suma exacta")
     # Etiqueta que muestra la indicacion correspondiente
-    indicacionApuesta = Label(ventana, text="Ingrese un numero entero entre 2 y 12.", font=("Times New Roman", 11),bg=colorFondo,fg=colorTexto)
+    indicacionApuesta = Label(ventana, text="Ingrese un numero entero entre 2 y 12.", font=("Times New Roman", 10),bg=colorFondo,fg=colorTexto)
     indicacionApuesta.pack(pady=5)
     # Funcion para cambiar la indicacion segun la apuesta
     def cambiarIndicacion():
@@ -147,8 +147,8 @@ def ventanaDados(ventanaAnterior, username):
     # Boton para apostar a dobles
     Radiobutton(ventana,text="Dobles",variable=tipoApuesta, value="Dobles",bg=colorFondo, fg=colorTexto,selectcolor="white",command=cambiarIndicacion).pack()
     # Entrada para escribir el pronostico
-    Label(ventana,text="Pronostico:",font=("Times New Roman", 11),bg=colorFondo,fg=colorTexto ).pack(pady=3)
-    entradaApuesta = Entry(ventana, font=("Times New Roman", 12))
+    Label(ventana,text="Pronostico:",font=("Times New Roman", 10),bg=colorFondo,fg=colorTexto ).pack(pady=3)
+    entradaApuesta = Entry(ventana, font=("Times New Roman", 10))
     entradaApuesta.pack(pady=5)
     # Mensaje para mostrar errores y resultados
     mensaje = Label(ventana,text="Ingrese su pronostico y las fichas que desea apostar.",font=("Times New Roman", 11),bg=colorFondo,fg=colorTexto,wraplength=470)
@@ -156,10 +156,10 @@ def ventanaDados(ventanaAnterior, username):
     # Entradas para las cantidades de fichas
     entradasFichas = []
     colores = ["Rojas", "Azules", "Verdes", "Blancas"]
-    Label(ventana,text="Cantidad de fichas que desea apostar:",font=("Times New Roman", 12),bg=colorFondo,fg=colorTexto).pack(pady=5)
+    Label(ventana,text="Cantidad de fichas que desea apostar:",font=("Times New Roman", 10),bg=colorFondo,fg=colorTexto).pack(pady=3)
     for color in colores:
         Label(ventana, text=color, bg=colorFondo,fg=colorTexto).pack()
-        entrada = Entry(ventana,font=("Times New Roman", 11),width=12)
+        entrada = Entry(ventana,font=("Times New Roman", 10),width=12)
         entrada.pack(pady=2)
         entradasFichas.append(entrada)
     # Funcion para realizar el lanzamiento
@@ -238,8 +238,8 @@ def ventanaDados(ventanaAnterior, username):
                  f"Total de fichas: {totalFichas}\n"
                  f"Monto apostado: ${valorApuesta}\n\n"
                  "¿Desea confirmar la apuesta?",
-            bg=colorFondo,fg=colorTexto,font=("Times New Roman", 12))
-        textoConfirmacion.pack(pady=20)
+            bg=colorFondo,fg=colorTexto,font=("Times New Roman", 10))
+        textoConfirmacion.pack(pady=15)
         # Funcion para confirmar la jugada
         def confirmarJugada():
             ventanaConfirmacion.destroy()
@@ -276,11 +276,11 @@ def ventanaDados(ventanaAnterior, username):
             for entrada in entradasFichas:
                 entrada.delete(0, tkinter.END)
         # Boton para confirmar
-        Button(ventanaConfirmacion,text="Confirmar",command=confirmarJugada).pack(pady=5)
+        Button(ventanaConfirmacion,text="Confirmar",command=confirmarJugada).pack(pady=3)
         # Boton para cancelar
-        Button(ventanaConfirmacion,text="Cancelar",command=ventanaConfirmacion.destroy).pack(pady=5)
+        Button(ventanaConfirmacion,text="Cancelar",command=ventanaConfirmacion.destroy).pack(pady=3)
         ventanaConfirmacion.grab_set()
     # Boton para lanzar los dados
-    Button(ventana,text="Lanzar dados",font=("Times New Roman", 14),command=realizarLanzamiento).pack(pady=12)
+    Button(ventana,text="Lanzar dados",font=("Times New Roman", 12),command=realizarLanzamiento).pack(pady=10)
     # Boton para volver
-    Button(ventana,text="Volver",font=("Times New Roman", 12),command=ventana.destroy).pack(pady=5)
+    Button(ventana,text="Volver",font=("Times New Roman", 10),command=ventana.destroy).pack(pady=3)
