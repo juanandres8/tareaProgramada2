@@ -46,35 +46,35 @@ def ventanaFichas(ventanaAnterior, username):
     #Titulo
     titulo = tkinter.Label(ventana,
         text="Administración de fichas",
-        font=("Georgia", 24),
+        font=("Georgia", 20),
         bg="lightblue" )
-    titulo.pack(pady=5)
+    titulo.pack(pady=3)
     #Username
     etiquetaJugador = tkinter.Label(ventana,
         text="Jugador: " + username,
-        font=("Arial", 12),
+        font=("Arial", 10),
         bg="lightblue")
-    etiquetaJugador.pack(pady=5)
+    etiquetaJugador.pack(pady=3)
     #Dinero disponible
     etiquetaDinero = tkinter.Label(ventana,
         text="",
-        font=("Arial", 14),
+        font=("Arial", 10),
         bg="lightblue")
-    etiquetaDinero.pack(pady=5)
+    etiquetaDinero.pack(pady=3)
     #Fichas disponibles
     etiquetaFichas = tkinter.Label(ventana,
         text="",
-        font=("Arial", 12),
+        font=("Arial", 10),
         bg="lightblue")
-    etiquetaFichas.pack(pady=10)
+    etiquetaFichas.pack(pady=5)
     #Valores de las fichas
     etiquetaValores = tkinter.Label(ventana,
         text="Valor de las fichas:\n"
         "Rojas: $10 | Azules: $50\n"
         "Verdes: $20 | Blancas: $5",
-        font=("Arial", 12),
+        font=("Arial", 10),
         bg="lightblue")
-    etiquetaValores.pack(pady=5)
+    etiquetaValores.pack(pady=3)
     #Actualizar informacion
     def actualizarInformacion():
         etiquetaDinero.config(text=f"Dinero disponible: ${jugadorActual[1][0]:.2f}")
@@ -108,18 +108,18 @@ def ventanaFichas(ventanaAnterior, username):
     #Campos para ingresar cantidades
     tituloCantidad = tkinter.Label(ventana,
         text="Ingrese la cantidad de fichas:",
-        font=("Arial", 13),
+        font=("Arial", 10),
         bg="lightblue")
-    tituloCantidad.pack(pady=5)
+    tituloCantidad.pack(pady=3)
     colores = ["rojas", "azules", "verdes", "blancas"]
     entradas = []
     for color in colores:
         etiquetaColor = tkinter.Label(ventana,
             text=color.capitalize(),
-            font=("Arial", 11),
+            font=("Arial", 10),
             bg="lightblue")
         etiquetaColor.pack()
-        entrada = tkinter.Entry(ventana,font=("Arial", 11))
+        entrada = tkinter.Entry(ventana,font=("Arial", 10))
         entrada.insert(0, "0")
         entrada.pack(pady=3)
         entradas.append(entrada)
@@ -203,29 +203,30 @@ def ventanaFichas(ventanaAnterior, username):
     #Boton comprar
     botonComprar = tkinter.Button(ventana,
         text="Comprar fichas",
-        font=("Times New Roman", 14),
+        font=("Times New Roman", 10),
         command=comprarFichas )
     botonComprar.pack(pady=5)
     #Boton canjear
     botonCanjear = tkinter.Button(ventana,
         text="Canjear fichas",
-        font=("Times New Roman", 14),
+        font=("Times New Roman", 10),
         command=canjearFichas)
     botonCanjear.pack(pady=5)
     #Boton agregar dinero
     botonAgregarDinero = tkinter.Button(ventana,
         text="Agregar dinero",
-        font=("Times New Roman", 14),
+        font=("Times New Roman", 10),
         command=agregarDinero)
-    botonAgregarDinero.pack(pady=5)
+    botonAgregarDinero.pack(pady=3)
     #Boton volver
     def volverPrincipal():
         ventana.destroy()
         ventanaAnterior.deiconify()
     botonVolver = tkinter.Button(ventana,
         text="Volver al menu principal",
-        font=("Times New Roman", 14),
+        font=("Times New Roman", 10),
         command=volverPrincipal)
-    botonVolver.pack(pady=5)
+    botonVolver.pack(pady=3)
     #Regresar al menu al cerrar la ventana
     ventana.protocol( "WM_DELETE_WINDOW",volverPrincipal)
+
