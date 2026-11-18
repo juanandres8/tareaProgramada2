@@ -77,6 +77,15 @@ def ventanaFichas(ventanaAnterior, username):
     etiquetaValores.pack(pady=3)
     #Actualizar informacion
     def actualizarInformacion():
+        """
+        Funcionalidad:
+        Actualiza la información del dinero y las fichas
+        disponibles del jugador en la ventana.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Actualiza las etiquetas de la interfaz.
+        """
         etiquetaDinero.config(text=f"Dinero disponible: ${jugadorActual[1][0]:.2f}")
         etiquetaFichas.config(text=f"Fichas disponibles:\n"
             f"Rojas: {jugadorActual[1][1]} | "
@@ -86,6 +95,18 @@ def ventanaFichas(ventanaAnterior, username):
     actualizarInformacion()
     #Agregar dinero
     def agregarDinero():
+        """
+        Funcionalidad:
+        Permite al jugador agregar dinero a su saldo,
+        validando que la cantidad ingresada sea positiva.
+        Solicita confirmación antes de realizar la operación
+        y guarda los cambios del jugador.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Actualiza el dinero del jugador y
+          guarda la información.
+        """
         #Solicitar cantidad de dinero
         dinero = simpledialog.askfloat( "Agregar dinero","¿Cuánto dinero desea agregar?", parent=ventana)
         #Comprobar si cancelo
@@ -125,6 +146,16 @@ def ventanaFichas(ventanaAnterior, username):
         entradas.append(entrada)
     #Obtener cantidades ingresadas
     def obtenerCantidades():
+        """
+        Funcionalidad:
+        Obtiene y valida las cantidades de fichas ingresadas
+        por el jugador.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - cantidades(list): Lista con las cantidades de fichas
+          ingresadas, o None si los datos son inválidos.
+        """
         cantidades = []
         for entrada in entradas:
             try:
@@ -142,11 +173,31 @@ def ventanaFichas(ventanaAnterior, username):
         return cantidades
     #Limpiar entradas
     def limpiarEntradas():
+        """
+        Funcionalidad:
+        Limpia los campos de entrada y coloca el valor
+        cero en cada uno.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Limpia los campos de la interfaz.
+        """
         for entrada in entradas:
             entrada.delete(0, tkinter.END)
             entrada.insert(0, "0")
     #Comprar fichas
     def comprarFichas():
+        """
+        Funcionalidad:
+        Calcula el costo de las fichas solicitadas,
+        comprueba el dinero disponible y realiza la compra
+        si el jugador la confirma.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Actualiza el dinero, las fichas y
+          guarda los cambios del jugador.
+        """
         cantidades = obtenerCantidades()
         if cantidades is None:
             return
@@ -174,6 +225,17 @@ def ventanaFichas(ventanaAnterior, username):
             messagebox.showinfo("Compra","Compra realizada correctamente", parent=ventana )
     #Canjear fichas
     def canjearFichas():
+        """
+        Funcionalidad:
+        Calcula el valor de las fichas que el jugador
+        desea canjear, comprueba que tenga suficientes
+        fichas y realiza el canje si lo confirma.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Actualiza el dinero, las fichas y
+          guarda los cambios del jugador.
+        """
         cantidades = obtenerCantidades()
         if cantidades is None:
             return
@@ -220,6 +282,16 @@ def ventanaFichas(ventanaAnterior, username):
     botonAgregarDinero.pack(pady=3)
     #Boton volver
     def volverPrincipal():
+        """
+        Funcionalidad:
+        Cierra la ventana de administración de fichas
+        y regresa al menú principal del casino.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Cierra la ventana actual y muestra
+          nuevamente la ventana anterior.
+        """
         ventana.destroy()
         ventanaAnterior.deiconify()
     botonVolver = tkinter.Button(ventana,
