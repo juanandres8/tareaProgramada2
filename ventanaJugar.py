@@ -52,6 +52,11 @@ def ventanaJugar(ventanaAnterior, username):
                  f"Blancas: {jugadorActual[1][4]}")
     #Mostrar las fichas al abrir la ventana
     actualizarFichas()
+
+    #Actualizar las fichas cuando se regresa de un juego
+    ventanaJugar.bind("<FocusIn>", actualizarFichas)
+    #Mostrar las fichas al abrir la ventana
+    actualizarFichas()
     #Botones
     #Ruleta
     botonRuleta=tkinter.Button(ventanaJugar,text="Ruleta",font=("Times New Roman", 16),command=lambda: ventanaRuleta(ventanaJugar, username))
@@ -69,4 +74,5 @@ def ventanaJugar(ventanaAnterior, username):
     botonVolver = tkinter.Button(ventanaJugar,text="Volver",font=("Times New Roman", 16), command=lambda: [ventanaJugar.destroy(), ventanaAnterior.deiconify()])
     botonVolver.pack(pady=5)
     
+
 
