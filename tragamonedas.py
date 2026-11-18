@@ -127,6 +127,15 @@ def ventanaTragamonedas(ventanaAnterior, username):
     textoFichas.pack(pady=5)
     #Actualizar informacion
     def actualizarInformacion():
+        """
+        Funcionalidad:
+        Actualiza la información del dinero y las fichas
+        disponibles del jugador en la ventana.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Actualiza las etiquetas de la interfaz.
+        """
         textoPuntaje.config(text=f"Puntaje: {jugadorActual[2]}")
         textoFichas.config(
             text=f"Rojas: {jugadorActual[1][1]} | "
@@ -161,6 +170,16 @@ def ventanaTragamonedas(ventanaAnterior, username):
     mensaje.pack(pady=12)
     #Validar fichas apostadas
     def validarApuesta():
+        """
+        Funcionalidad:
+        Valida las cantidades de fichas que el jugador
+        desea apostar en la tragamonedas.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - fichasApostadas(list): Lista con las cantidades
+          de fichas válidas o None si existe un error.
+        """
         fichasApostadas = []
         for posicion in range(4):
             try:
@@ -181,14 +200,47 @@ def ventanaTragamonedas(ventanaAnterior, username):
         return fichasApostadas
     #Limpiar entradas
     def limpiarEntradas():
+        """
+        Funcionalidad:
+        Limpia las entradas de las cantidades apostadas
+        y coloca nuevamente el valor cero.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Reinicia los campos de entrada.
+        """
         for entrada in entradas:
             entrada.delete(0, tkinter.END)
             entrada.insert(0, "0")
     #Animacion de los rodillos
     def animarRodillos(resultado, fichasApostadas):
+        """
+        Funcionalidad:
+        Inicia y controla la animación de los rodillos.
+        Muestra símbolos aleatorios y posteriormente el
+        resultado definitivo de la jugada.
+        Entrada:
+        - resultado(tuple): Símbolos obtenidos en el giro.
+        - fichasApostadas(list): Cantidades apostadas
+          por cada color de ficha.
+        Salida:
+        - Ninguna. Actualiza los rodillos, las fichas,
+          el puntaje y el mensaje de resultado.
+        """
         #Contador de animacion
         contador = [0]
         def animacion():
+            """
+            Funcionalidad:
+            Actualiza los símbolos de los rodillos durante
+            la animación y muestra el resultado definitivo
+            cuando esta termina.
+            Entrada:
+            - Ninguna.
+            Salida:
+            - Ninguna. Actualiza los elementos gráficos
+              y finaliza la jugada.
+            """
             if contador[0] < 20:
                 for posicion in range(3):
                     simbolo = random.choice(rodillos[posicion])
@@ -226,6 +278,17 @@ def ventanaTragamonedas(ventanaAnterior, username):
         animacion()
     #Realizar jugada
     def realizarGiro():
+        """
+        Funcionalidad:
+        Valida las fichas apostadas, solicita la
+        confirmación del jugador y comienza el giro
+        de la tragamonedas.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Inicia la animación cuando la
+          apuesta es válida y confirmada.
+        """
         fichasApostadas = validarApuesta()
         if fichasApostadas is None:
             return
