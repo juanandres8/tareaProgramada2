@@ -133,6 +133,16 @@ def ventanaDados(ventanaAnterior, username):
     indicacionApuesta.pack(pady=5)
     # Funcion para cambiar la indicacion segun la apuesta
     def cambiarIndicacion():
+        """
+        Funcionalidad:
+        Modifica la indicación que se muestra al jugador
+        según el tipo de apuesta que haya seleccionado.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Actualiza el texto de la interfaz
+          para indicar qué pronóstico debe ingresar.
+        """
         tipo = tipoApuesta.get()
         if tipo == "Suma exacta":
             indicacionApuesta.config( text="Ingrese un numero entero entre 2 y 12.")
@@ -164,6 +174,19 @@ def ventanaDados(ventanaAnterior, username):
         entradasFichas.append(entrada)
     # Funcion para realizar el lanzamiento
     def realizarLanzamiento():
+        """
+        Funcionalidad:
+        Valida el pronóstico y las cantidades de fichas
+        ingresadas por el jugador. Comprueba que tenga
+        suficientes fichas, solicita confirmación y,
+        si la apuesta es válida, realiza el lanzamiento
+        de los dados.
+        Entrada:
+        - Ninguna.
+        Salida:
+        - Ninguna. Ejecuta la jugada si los datos
+          ingresados son válidos y están confirmados.
+        """
         tipo = tipoApuesta.get()
         apuesta = entradaApuesta.get().strip()
         # VALIDACION 1: SUMA EXACTA
@@ -242,6 +265,18 @@ def ventanaDados(ventanaAnterior, username):
         textoConfirmacion.pack(pady=15)
         # Funcion para confirmar la jugada
         def confirmarJugada():
+            """
+            Funcionalidad:
+            Confirma la apuesta del jugador, muestra el
+            resultado obtenido al lanzar los dados, determina
+            si ganó o perdió y actualiza las fichas y el
+            puntaje correspondiente.
+            Entrada:
+            - Ninguna.
+            Salida:
+            - Ninguna. Actualiza los datos del jugador,
+              la interfaz gráfica y guarda los cambios.
+            """
             ventanaConfirmacion.destroy()
             resultado = lanzarDados()
             gano = comprobarApuesta(tipo,apuesta,resultado)
